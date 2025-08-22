@@ -52,6 +52,12 @@ class _ToDoListsState extends State<ToDoLists> {
           actions: [
             TextButton(
               onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   Navigator.of(context).pop();
                   setState(() {

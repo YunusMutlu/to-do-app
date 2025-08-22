@@ -26,6 +26,15 @@ class _ToDoListDetailPageState extends State<ToDoListDetailPage> {
           content: Form(
             key: _formKey,
             child: TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a task name';
+                } else if (widget.tasks.any((task) => task.title == value)) {
+                  return 'Task already exists';
+                }
+                return null;
+              },
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: _taskController,
               decoration: const InputDecoration(
                 hintText: 'Enter task name',
@@ -64,6 +73,15 @@ class _ToDoListDetailPageState extends State<ToDoListDetailPage> {
           content: Form(
             key: _formKey,
             child: TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a task name';
+                } else if (widget.tasks.any((task) => task.title == value)) {
+                  return 'Task already exists';
+                }
+                return null;
+              },
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: _taskController,
               decoration: const InputDecoration(
                 hintText: 'Edit task name',
@@ -72,6 +90,12 @@ class _ToDoListDetailPageState extends State<ToDoListDetailPage> {
             ),
           ),
           actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
             TextButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
@@ -172,6 +196,12 @@ class _ToDoListDetailPageState extends State<ToDoListDetailPage> {
               ),
 
               child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                tileColor: widget.tasks[index].isDone
+                    ? Colors.green.withAlpha(128)
+                    : null,
                 title: widget.tasks[index].isDone
                     ? Text(
                         widget.tasks[index].title,
